@@ -5,7 +5,8 @@ export class Segment {
     angle: number;
     len: number;
     b: PVector;
-    constructor(X: number, Y: number, Len: number, Angle: number) {
+    parent: Segment;
+    constructor(X: number, Y: number, Len: number, Angle: number, Parent?: Segment) {
         this.a = new PVector(X, Y);
         this.len = Len;
         this.angle = Angle;
@@ -13,6 +14,16 @@ export class Segment {
         const dx: number = this.len * Math.cos(this.angle);
         const dy: number = this.len * Math.sin(this.angle);
         this.b = new PVector(this.a.x + dx, this.a.y + dy);
+
+        if (Parent !== undefined) {
+            this.parent = Parent
+            this.a = new PVector(this.parent.b.x, this.parent.b.y);
+        }
+        else {
+            this.parent = null;
+        }
+
+        this.calculateB();
     }
 
     follow(targetX: number, targetY: number) {
