@@ -37,7 +37,7 @@ export class Entity {
         this.w = W
         this.leg1seg1 = new Segment(this.x + this.w, this.y, 20, 225 * Math.PI/180);
         this.leg1seg2 = new Segment(0, 0, 20, 0, this.leg1seg1);
-        this.leg1Target = new LegTarget(X + this.w + 10, Y - 10); 
+        this.leg1Target = new LegTarget(X + this.w + 10, Y - 5); 
     }
 
     update() : void {
@@ -49,8 +49,8 @@ export class Entity {
         this.leg1seg1.follow(this.leg1seg2.a.x, this.leg1seg2.a.y, this.leg1seg2);
         this.leg1seg1.update();
         // move leg test code
-        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) < 12) {// && this.leg1Target.reachCount === 0) {
-            this.leg1Target.reachCount = 25;
+        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) > this.leg1Target.len) {// && this.leg1Target.reachCount === 0) {
+            this.leg1Target.reachCount = 70;
         }
         this.leg1Target.reach();
     }
@@ -68,9 +68,9 @@ export class Entity {
     }
 
     draw (ctx: CanvasRenderingContext2D) : void {
-        this.leg1seg1.draw(ctx);
-        this.leg1seg2.draw(ctx);
         ctx.fillStyle = "grey";
         ctx.fillRect(this.x, this.y, this.w, this.h);
+        this.leg1seg1.draw(ctx);
+        this.leg1seg2.draw(ctx);
     }
 }
