@@ -8,7 +8,7 @@ let mouseY = 0;
 let mouseX = 0;
 let seg1 = new Segment(300, 200, 100, 0);
 let seg2 = new Segment(0, 0, 100, 0, seg1);
-let ent = new Entity(250, 250, 25, 25);
+let ent = new Entity(0, 250, 25, 25);
 
 function update() : void {
     ent.update();
