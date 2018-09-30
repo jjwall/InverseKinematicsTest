@@ -7,14 +7,16 @@ class LegTarget {
     reachCount;
     constructor(X: number, Y: number) {
         this.len = 40;
-        this.reachCount = 30;
+        this.reachCount = 25;
         this.x = X;
         this.y = Y;
     }
 
-    move() {
-        this.reachCount--;
-        this.x += 2;
+    reach() {
+        if (this.reachCount > 0) {
+            this.reachCount--;
+            this.x += 2;
+        }
     }
 }
 
@@ -47,17 +49,10 @@ export class Entity {
         this.leg1seg1.follow(this.leg1seg2.a.x, this.leg1seg2.a.y, this.leg1seg2);
         this.leg1seg1.update();
         // move leg test code
-        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) <= this.leg1Target.len && this.leg1Target.reachCount > 0) {
-        // if (this.leg1Target.reach) {
-            // this.leg1Target.x += 2;
-            this.leg1Target.move();
+        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) < 12) {// && this.leg1Target.reachCount === 0) {
+            this.leg1Target.reachCount = 25;
         }
-        else if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) < 20 && this.leg1Target.reachCount === 0) {
-            this.leg1Target.reachCount = 30;
-        // if (this.ticks < 20) {
-        //     this.leg1Target.x += 3;
-        // }
-        }
+        this.leg1Target.reach();
     }
 
     calculateLegDistance(Seg1: Segment, Seg2: Segment): number {
