@@ -15,8 +15,8 @@ function update() : void {
     seg2.follow(mouseX, mouseY);
     // seg2.lockToChildB(seg1);
     seg2.update();
-    seg1.follow(seg2.a.x, seg2.a.y);
-    // seg1.calculateB(250, 250);
+    seg1.follow(seg2.a.x, seg2.a.y, seg2);
+    // seg1.a.x++;
     seg1.update();
 }
 

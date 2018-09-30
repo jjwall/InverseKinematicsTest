@@ -1,5 +1,14 @@
 import { Segment } from "./Segment";
 
+class LegTarget {
+    x: number;
+    y: number;
+    constructor(X: number, Y: number) {
+        this.x = X;
+        this.y = Y;
+    }
+}
+
 export class Entity {
     x: number;
     y: number;
@@ -7,31 +16,40 @@ export class Entity {
     w: number;
     leg1seg1: Segment;
     leg1seg2: Segment;
+    leg1Target: LegTarget;
     ticks: number;
     constructor(X: number, Y: number, H: number, W: number) {
         this.ticks = 1;
         this.x = X;
         this.y = Y;
         this.h = H;
-        this.w = W;
+        this.w = W
         this.leg1seg1 = new Segment(this.x + this.w, this.y, 20, 225 * Math.PI/180);
         this.leg1seg2 = new Segment(0, 0, 20, 0, this.leg1seg1);
+        this.leg1Target = new LegTarget(X + this.w + 10, Y - 10); 
     }
 
     update() : void {
         this.ticks++;
         this.x++;
-        this.leg1seg2.follow(this.lungeLeg() + this.w, this.y);
+        this.leg1seg1.a.x++;
+        this.leg1seg2.follow(this.leg1Target.x, this.leg1Target.y);
         this.leg1seg2.update();
-        this.leg1seg1.follow(this.leg1seg2.a.x, this.leg1seg2.a.y);
+        this.leg1seg1.follow(this.leg1seg2.a.x, this.leg1seg2.a.y, this.leg1seg2);
         this.leg1seg1.update();
-        // this.leg1seg1.calculateB(1);
-        // if (this.x % 100 === 0) {
-        //     this.leg1seg1.b.x += 10;
-        //     this.leg1seg1.b.y -= 10;
-        //     this.leg1seg1.a.x += 10;
-        //     this.leg1seg1.a.y += 10;
-        // }
+        // move leg test code
+        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) < this.leg1seg1.len + this.leg1seg2.len) {
+            this.leg1Target.x += 2;
+        }
+        // else if ()
+    }
+
+    calculateLegDistance(Seg1: Segment, Seg2: Segment): number {
+        var v1 = Seg2.b.x - Seg1.a.x;
+        var v2 = Seg2.b.y - Seg1.a.y;
+        var dist = Math.sqrt(v1*v1 + v2*v2);
+        console.log(dist);
+        return dist;
     }
 
     lungeLeg() : number {

@@ -26,15 +26,27 @@ export class Segment {
         this.calculateB();
     }
 
-    follow(targetX: number, targetY: number) {
+    follow(targetX: number, targetY: number, child?: Segment) {
         let target = new PVector(targetX, targetY);
         let dir = PVector.sub(target, this.a);
         this.angle = dir.heading();
 
-        dir.setMag(this.len);
-        dir.mult(-1);
 
-        this.a = PVector.add(target, dir);
+        if (this.parent !== null) {
+            dir.setMag(this.len);
+            dir.mult(-1);
+            this.a = PVector.add(target, dir);
+        }
+        else {
+            if (child !== undefined) {
+                // this.a.x = child.b.x;
+                // this.a.y = child.b.y;
+                child.a.x = this.b.x;
+                child.a.y = this.b.y;
+                // child.a.setMag(Math.sqrt((this.a.x)^2 + (this.a.y)^2));
+                // child.b.setMag(Math.sqrt((this.b.x)^2 + (this.b.y)^2));
+            }
+        }
     }
 
     calculateB() : void {
