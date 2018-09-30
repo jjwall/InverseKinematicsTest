@@ -3,9 +3,18 @@ import { Segment } from "./Segment";
 class LegTarget {
     x: number;
     y: number;
+    len: number;
+    reachCount;
     constructor(X: number, Y: number) {
+        this.len = 40;
+        this.reachCount = 30;
         this.x = X;
         this.y = Y;
+    }
+
+    move() {
+        this.reachCount--;
+        this.x += 2;
     }
 }
 
@@ -38,10 +47,17 @@ export class Entity {
         this.leg1seg1.follow(this.leg1seg2.a.x, this.leg1seg2.a.y, this.leg1seg2);
         this.leg1seg1.update();
         // move leg test code
-        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) < this.leg1seg1.len + this.leg1seg2.len) {
-            this.leg1Target.x += 2;
+        if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) <= this.leg1Target.len && this.leg1Target.reachCount > 0) {
+        // if (this.leg1Target.reach) {
+            // this.leg1Target.x += 2;
+            this.leg1Target.move();
         }
-        // else if ()
+        else if (this.calculateLegDistance(this.leg1seg1, this.leg1seg2) < 20 && this.leg1Target.reachCount === 0) {
+            this.leg1Target.reachCount = 30;
+        // if (this.ticks < 20) {
+        //     this.leg1Target.x += 3;
+        // }
+        }
     }
 
     calculateLegDistance(Seg1: Segment, Seg2: Segment): number {
