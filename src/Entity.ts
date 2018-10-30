@@ -31,8 +31,8 @@ class Leg {
         this.seg1.follow(this.seg2.a.x, this.seg2.a.y, this.seg2);
         this.seg1.update();
         // move leg test code
-        if (calculateLegDistance(this.seg1, this.seg2) > this.len) {// && this.leg1Target.reachCount === 0) {
-            this.reachCount = 70;
+        if (calculateLegDistance(this.seg1, this.seg2) > this.len && this.targetX < this.seg2.a.x) {// && this.leg1Target.reachCount === 0) {
+            this.reachCount = 40;
         }
         this.reach();
     }
@@ -57,14 +57,14 @@ export class Entity {
         this.h = H;
         this.w = W
         this.legs = [];
-        let leg1seg1 = new Segment(this.x + this.w, this.y, 20, 225 * Math.PI/180);
-        let leg1seg2 = new Segment(0, 0, 20, 0, leg1seg1);
-        let leg2seg1 = new Segment(this.x + this.w, this.y + this.h, 20, 90 * Math.PI/180);
-        let leg2seg2 = new Segment(0, 0, 20, 0, leg2seg1);
-        let leg3seg1 = new Segment(this.x, this.y + this.h, 20, 90 * Math.PI/180);
-        let leg3seg2 = new Segment(0, 0, 20, 0, leg2seg1);
-        let leg4seg1 = new Segment(this.x, this.y, 20, 225 * Math.PI/180);
-        let leg4seg2 = new Segment(0, 0, 20, 0, leg1seg1);
+        let leg1seg1 = new Segment(this.x + this.w, this.y, 10, 225 * Math.PI/180);
+        let leg1seg2 = new Segment(0, 0, 10, 0, leg1seg1);
+        let leg2seg1 = new Segment(this.x + this.w, this.y + this.h, 10, 90 * Math.PI/180);
+        let leg2seg2 = new Segment(0, 0, 10, 0, leg2seg1);
+        let leg3seg1 = new Segment(this.x, this.y + this.h, 10, 90 * Math.PI/180);
+        let leg3seg2 = new Segment(0, 0, 10, 0, leg2seg1);
+        let leg4seg1 = new Segment(this.x, this.y, 10, 225 * Math.PI/180);
+        let leg4seg2 = new Segment(0, 0, 10, 0, leg1seg1);
         this.legs.push(new Leg(X + this.w + 10, Y - 5, leg1seg1, leg1seg2)); 
         this.legs.push(new Leg(X - this.w - 10, Y + this.h + 5, leg2seg1, leg2seg2));
         this.legs.push(new Leg(X - this.w - 10, Y + this.h + 5, leg3seg1, leg3seg2));
